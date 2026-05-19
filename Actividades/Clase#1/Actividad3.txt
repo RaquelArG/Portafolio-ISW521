@@ -1,0 +1,14 @@
+Actividad 3:
+Parte 1
+Esquema: https://
+Host/dominio: api.github.com
+Puerto: :443
+Ruta:   /repos/bryancs/isw521/issues
+Query string:?state=open&labels
+Fragmentos: #comentarios
+
+
+Parte 2
+1./cursos/isw-521/2026-2/san-carlos
+2./estudiantes/2022-0001
+3./cursos/isw-521/semanas/3/materiales

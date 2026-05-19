@@ -1,0 +1,9 @@
+Actividad 1:
+Parte 1. Depende de lo que se quiera, si se quiere acceder solo de manera local o desde cualquier punto. 
+Sí es correcto(red conectada de computadoras), pero no completamente,
+La distension del director se debe a que la web se utiliza sobre internet. WEB usa los protocolos para enviar la información.
+
+Parte 2.Ambos, pero si se habilita de manera privada.
+
+Parte 3.IETF , porque define HTTP, TLS/HTTPS y DNS. Siendo vital para arrancar el servidor.
+

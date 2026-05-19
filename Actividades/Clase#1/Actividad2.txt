@@ -1,0 +1,14 @@
+Actividad 2:
+Parte 1.
+A: Internet
+La decisión se debe a que es un espacio en donde cualquier persona puede acceder, sin necesidad de pertenecer o tener un acceso especial, y el inicio de sesión es opcional.
+B: Intranet
+Se debe a que a el sistema solo tendrán acceso las personas asociadas directamente, por ejemplo, un empleado accede a la red de una organización, acá si es obligatorío el uso de autenticación.
+
+C: Extranet
+Se debe a que el acceso lo tienen usuarios externos autorizados (continuando el ejemplo de la municipalidad, el acceso podria otorgarse a una empresa constructora).Se necesita acceso controlado desde fuera de la institución con autenticación.
+
+
+Parte 2.El c y el b, ambas manejan información sensible.
+
+Parte 3.Sí se puede, trabajando con mismo hardward (por ejemplo, switch) se puede separar de manera lógica, mediante maquinas virtuales, VLANDs, etc.
