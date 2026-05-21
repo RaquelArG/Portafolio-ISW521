@@ -1,0 +1,5 @@
+Actividad 2
+1.El HTTP/2 permite enviar varias solicitudes al mismo tiempo, por lo que el e-commerce mejoría el rendimiento y ayudaría a reducir la latencia.
+2.Porque usa TCP como protocolo de transporte, quiere decir que cuando se pierde un paquete, el emisor detiene el proceso de envió para reenviar el paquete(continua hasta resivir el ack por parte del cliente).
+3. si tiene sentido, porque HTTP/3 trabaja con quic, lo cual es una mezcla entre velocidad y confiabilidad al enviar los paquetes y al ser un e-commerce requiere de ambas cualidades, pero lo mas viable es un cambio progresivo. Se requiere compatibilidad entre servidores y Soporte de udp.
+4.Herramienta de inspección del navegador, donde se pueda visualizar el comportamiento de los paquetes.

@@ -1,0 +1,6 @@
+Actividad 3
+1.Fue emitido por Let's Encrypt. Es un Intermediate CA (los campos Emitido para y Emitido por son diferentes.).
+2.Vence el domingo, 2 de agosto de 2026, 1:33:49 a. m.
+3.Esta utilizando la Versión 3.
+4.TLS_AES_128_GCM_SHA256 
+5.Si se vence podría seguir siendo seguro, más al ingresar a al sitio web saldría una advertencia de que el sitio no esta certificado y podría ser inseguro.

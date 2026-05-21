@@ -1,0 +1,9 @@
+1.DNS: 50 microsegundos.
+2.TCP Handshake: 171.08 milisegundos.
+3.TLS Handshake: 86.61 milisegundos.
+4.Cantidade de recursos:196. Total con HTTP/2: 3.
+5.Recurso más pesado: imagen(actividades-bg.png) 1572kb. Como optimizarlo: Enviarlo de manera segmentada.
+6.Resumen:
+
+Se solicito un total de 196 recursos, donde el DNS tuvo un tiempo de 50 microsegundos, TCP Handshake(Initial conection) 171.08 milisegundos y TLS Handshake(SSL) 86.61 milisegundos.
+El recurso que mas peso fue una imagen con 1572kb, mientras que, 0.4 la mas liviana(igualmente una imagen .png).

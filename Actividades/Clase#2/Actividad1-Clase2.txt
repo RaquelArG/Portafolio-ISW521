@@ -1,0 +1,5 @@
+Actividad 1
+1.No es correcto, debido a que los archivos son críticos e iniciales (sirven para configurar, puede sufrir una caída dado que controla como interactúan los servicios) por lo que si se pierden, no es posible continuar.
+2.Se perdería el ack(la confirmación de que los paquetes fueron recibidos).
+3.En sistemas que prioricen la velocidad antes que la confiabilidad. Ejemplo, juegos en línea.
+4.Si se hacen muchas conexiones cortas y el receptor no tiene la capacidad de tolerarlo, puede generar una saturación de recursos(porque no le da tiempo de devolver el ack(respuesta de que se recibió el paquete)) o alargar el tiempo de respuesta.
