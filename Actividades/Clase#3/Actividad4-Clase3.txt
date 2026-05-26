@@ -1,0 +1,12 @@
+
+Actividad siguiente
+
+1. Nginx, ya que la misma tiene una cualidad de conexiones alta sin utilizar procesos por separado (Como lo que hace Apache Prefork). Nginx utiliza 4 workers para realizar las tareas en vez de generar un proceso por cada conexion generando mayor eficiencia de memoria. La velocidad de respuesta Tambien es un plus general debido a que al reducir la memoria utilizada Nginx tiene un tiempo de respuesta mucho mayor.
+
+2.Afecta por que ningun servidor lo soportaria. Con Nginx + event loop: mismo escenario consume ~500 MB total.
+
+3.Se debe habilitar el proxying y el upgrade.
+Ejemplo directo:
+proxy_http_version 1.1;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection "upgrade";

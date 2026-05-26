@@ -1,0 +1,8 @@
+1.Signifca que el puerto ya esta en uso(ya existe un proceso escuchando en este puerto).
+
+2.Se utilizaría netstat -ano | findstr :8080, sirve para saber que PID(Identificador de Proceso) usa cada puerto.
+
+3.Manejar entornos.
+
+4.Utilizar otro puerto a futuro, validar el error. 
+

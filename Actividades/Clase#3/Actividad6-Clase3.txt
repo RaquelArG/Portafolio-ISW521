@@ -1,0 +1,4 @@
+Actividad
+A:Aplicación web.
+B:Sitio web.
+C:Aplicación web.

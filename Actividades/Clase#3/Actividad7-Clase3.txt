@@ -1,0 +1,4 @@
+Actividad
+A:SSG
+B:CSR
+C:SSG

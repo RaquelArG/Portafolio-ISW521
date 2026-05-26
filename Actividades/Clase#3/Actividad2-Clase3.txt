@@ -1,0 +1,38 @@
+1.Entradas en /etc/hosts
+IP             nombre_de_host   alias_opcional
+192.168.1.10   portafolio.local
+192.168.1.10   api.local
+192.168.1.10   admin.local
+
+2.
+Cada served debe de tener configurado:
+	-El puerto que escucha (listen 80;)
+	-El nombre del dominio (server_name)
+	-La carpeta raíz donde están los archivos (root)
+	-El archivo inicial (index)
+
+
+server {
+    listen 80;
+    server_name portafolio.local;
+    root /var/www/portafolio;
+    index index.html;
+}
+
+server {
+    listen 80;
+    server_name api.local;
+    root /var/www/api;
+    index index.html;
+}
+
+server {
+    listen 80;
+    server_name admin.local;
+    root /var/www/admin;
+    index index.html;
+}
+
+
+
+3.Va y toma el primer servidor por defecto.

@@ -1,0 +1,4 @@
+Actividad
+1.Bare Metal
+2.VPS
+3.Contenedores

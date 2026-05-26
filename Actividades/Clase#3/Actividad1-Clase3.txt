@@ -1,0 +1,15 @@
+1.
+ping 
+systemctl status nginx  
+journalctl -u nginx -n 50
+
+
+
+2.Pasos
+1.Reiniciar el servicio.
+2.erificar que la configuracion sea válida antes de reiniciar
+3.Si falla de nuevo buscar el error concreto.
+
+
+3.
+-Levantar el servicio.

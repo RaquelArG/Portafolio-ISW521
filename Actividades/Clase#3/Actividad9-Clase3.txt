@@ -1,0 +1,16 @@
+
+Actividad
+1.SCP o SFTP, ambas opciones utilizan SSH y cifran la transferencia.
+Comando:
+scp -r ./dist usuario@IP_DEL_SERVIDOR:/var/www/app/dist
+
+2.
+En el VPS, crear /etc/environment o el .env del proceso:
+echo 'DB_URL=mongodb://...' >> /home/ubuntu/.env
+echo 'JWT_SECRET=supersecreto' >> /home/ubuntu/.env
+En server.js: require('dotenv').config(); process.env.JWT_SECRET
+
+
+
+3.
+Primeramente es inseguro porque expone las credenciales, segundamente porque el código y la configuración deben ser independientes, y finalmente, es posible incumplir políticas de privacidad o normativa.

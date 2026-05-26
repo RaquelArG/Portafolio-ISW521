@@ -1,0 +1,4 @@
+
+Actividad
+-Descarto inmediatamente la opción C, porque guarda directamente los datos del usuario los guarda en el local storage.
+-Opción B, debido a que el browser envia la cookie, pero JS no puede leerla.
