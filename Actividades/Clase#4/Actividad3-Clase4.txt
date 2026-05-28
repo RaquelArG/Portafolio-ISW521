@@ -1,0 +1,15 @@
+1.3-WAY MERGE. 
+
+
+2.
+git fetch origin
+git log origin/feature/dark-mode
+git diff main..origin/feature/dark-mode
+git show origin/feature/dark-mode
+
+
+3.
+-Contexto de que problema resuelve o necesidad.
+-Descripción técnica de qué o cómo se implemento.
+-El impacto que tiene.
+-Validaciones, que ayuden a entender cómo se verificó el cambio.

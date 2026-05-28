@@ -1,0 +1,22 @@
+Punto 1:
+1.
+git branch
+git log
+git rebase -i HEAD~5
+fix(login): corrected authentication error
+git push origin main 
+git log origin/main 
+
+2.chore: minor updates by Bryan
+
+3.feat(client): new functionality requested by client
+
+
+Punto 2:
+Los que incluyen .env (puede contener claves) y no_modules(suben información innecesaria).
+Se debió haber configurado el gitignore.
+
+Punto3:
+Sin git add: estado untracked (sin seguimiento). Significa que existe en la computadora(local), pero aún no está registrado en su base de datos ni se le está haciendo un seguimiento de los cambios.
+Sin commit (preparado para el commit):es un área temporal (es donde se marcan y agrupan los cambios que deseas incluir).
+

@@ -1,0 +1,15 @@
+1.
+git fetch origin. 
+git log origin/main
+git diff main origin/main
+
+git pull hace dos cosas: descarga (fetch) y además intenta fusionar automáticamente en tu rama local.
+
+2.
+git checkout main
+git pull --rebase origin main
+
+3.Significa que en el repositorio hay cambios que todavía no se han realizado en la rama local.
+git fetch origin
+git rebase origin/main
+git push origin main
