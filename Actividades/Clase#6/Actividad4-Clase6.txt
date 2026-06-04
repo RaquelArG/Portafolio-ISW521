@@ -1,0 +1,2 @@
+Párrafo A: Verde #contenido p (1,0,1)
+Párrafo B: Verde #contenido p (1,0,1)

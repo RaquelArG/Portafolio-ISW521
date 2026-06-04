@@ -1,0 +1,9 @@
+1.4.5:1 
+La formula es 
+L1(luminancia relativa del color más claro) +0.05 / L2(luminancia relativa del color más oscuro) + 0.05. 
+El 0.05  representa el valor de compensación por la luz ambiental.
+
+2. AA porque cumple con el mínimo ya que para el AAA se requiere un mínimo de 7:1.
+
+3.Cumple el AA porque alcanza 4.5:1,  AAA se requiere que sea mayor a 18px.
+

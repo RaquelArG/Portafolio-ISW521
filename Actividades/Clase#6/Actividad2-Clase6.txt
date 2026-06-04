@@ -1,0 +1,30 @@
+1.Se debe a que el navegador continúa recorriendo todos los elementos focusables del DOM, incluyendo a los que esten detrás del modal.
+
+
+2.Mediante gestión del foco y control de eventos de teclado(Se encierra el foco dentro del modal - circuito cerrado):
+Al abrir el modal primero se identifican todos los elementos que pueden recibir foco, seguidamente, el foco se coloca en el primer elemento interactivo, después, se intercepta la tecla Tab para que, al llegar al último elemento, el foco regrese al primero.
+-Para esto el fondo debe quedar inaccesible por teclado.
+
+3.
+const modal = document.querySelector('#miModal');
+const focusables = modal.querySelectorAll('a, button, input, [tabindex]');
+const first = focusables[0];
+const last = focusables[focusables.length - 1];
+
+modal.addEventListener('keydown', (e) => {
+  if (e.key === 'Tab') {
+    if (e.shiftKey) {
+      // Shift + Tab
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      // Solo Tab
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
+});
