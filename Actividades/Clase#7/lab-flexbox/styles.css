@@ -1,0 +1,1162 @@
+/*
+ * ════════════════════════════════════════════════════════════════════
+ *  AcueductosIoT – Dashboard de Monitoreo Hídrico
+ *  Laboratorio #3: Maquetación de Layouts con Flexbox
+ *  Universidad Técnica Nacional
+ * ════════════════════════════════════════════════════════════════════
+ *  Autor      : Solución de referencia
+ *  Fuentes    : Barlow Condensed (titulares) · IBM Plex Mono (datos)
+ *  Restricción: PROHIBIDO uso de floats, position:absolute o
+ *               position:fixed para layout. Solo Flexbox.
+ * ════════════════════════════════════════════════════════════════════
+ */
+
+
+/* ──────────────────────────────────────────────────────────────────
+   0. DESIGN TOKENS  –  Variables CSS globales
+   ────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Paleta: sala de control industrial (oscura + cian eléctrico) */
+  --color-bg-root:        #080f1e;
+  --color-bg-surface:     #0d1b2e;
+  --color-bg-raised:      #122040;
+  --color-bg-hover:       #1a2f55;
+
+  --color-accent-primary: #00cfff;  /* cian brillante – datos principales  */
+  --color-accent-glow:    rgba(0, 207, 255, 0.18);
+
+  --color-ok:             #14e06e;  /* verde – estado normal               */
+  --color-warning:        #f59e0b;  /* ámbar – nivel bajo / aviso          */
+  --color-error:          #f43f5e;  /* rojo  – alerta crítica              */
+  --color-info:           #60a5fa;  /* azul  – informativo                 */
+
+  --color-text-primary:   #e2eaf5;
+  --color-text-secondary: #7b9ab8;
+  --color-text-muted:     #3d5a7a;
+  --color-border:         rgba(0, 207, 255, 0.12);
+
+  /* Tipografía */
+  --font-display:  'Barlow Condensed', sans-serif;
+  --font-mono:     'IBM Plex Mono', monospace;
+
+  /* Espaciado y radios */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Alturas fijas */
+  --navbar-height: 60px;
+  --footer-height: 44px;
+
+  /* Transiciones */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+}
+
+
+/* ──────────────────────────────────────────────────────────────────
+   1. RESET Y BASE
+   ────────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  /*
+   * Sticky Footer Pattern
+   * Explicación Ejercicio 4 (parcial):
+   * Definimos el body como contenedor flex vertical.
+   * Esto permite que el <footer> sea empujado al final de la
+   * página sin importar cuán corto sea el contenido, evitando
+   * que "flote" a mitad de pantalla en vistas con poco contenido.
+   */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  background-color: var(--color-bg-root);
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.5;
+
+  /* Fondo texturizado sutil para estética industrial */
+  background-image:
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0, 100, 180, 0.12) 0%, transparent 60%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(0, 207, 255, 0.025) 39px,
+      rgba(0, 207, 255, 0.025) 40px
+    );
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   ░░  EJERCICIO 1 – NAVBAR FLEX HORIZONTAL  ░░
+   ══════════════════════════════════════════════════════════════════
+
+   RESPUESTA CONCEPTUAL OBLIGATORIA [EJ1]:
+   ¿Qué hace exactamente `justify-content: space-between`?
+
+   `justify-content` controla la distribución del espacio libre
+   a lo largo del EJE PRINCIPAL del contenedor flex (en este caso,
+   el eje horizontal, porque flex-direction es row por defecto).
+
+   `space-between` divide el espacio libre restante en n-1 "ranuras"
+   y coloca UNA ranura entre cada par de elementos adyacentes, sin
+   agregar ningún espacio antes del primer ítem ni después del último.
+
+   Resultado visual en la Navbar:
+   ┌──────────────────────────────────────────────────────────┐
+   │ 💧 AcueductosIoT   [Inicio Sensores Alertas Reportes]   Cerrar Sesión │
+   └──────────────────────────────────────────────────────────┘
+     ^── 1er hijo                    ^── 2do hijo             ^── 3er hijo
+        (sin margen antes)      (espacio entre ellos)         (sin margen al final)
+
+   Esto es ideal para barras de navegación porque coloca el logo
+   en el extremo izquierdo y el botón de logout en el extremo
+   derecho de forma automática y adaptable, sin importar el ancho
+   del viewport.
+
+   ════════════════════════════════════════════════════════════════ */
+
+.navbar {
+  /*
+   * FLEX CONTAINER: activa Flexbox en la barra de navegación.
+   * Los elementos hijos directos (brand, links, logout) se
+   * convierten en flex-items y se distribuyen en una fila horizontal.
+   */
+  display: flex;
+
+  /*
+   * ALINEACIÓN EN EJE SECUNDARIO (vertical):
+   * `align-items: center` centra todos los flex-items en el centro
+   * del eje cruzado (vertical), por lo que el logo, los enlaces y
+   * el botón quedan alineados a la misma altura visual.
+   */
+  align-items: center;
+
+  /*
+   * DISTRIBUCIÓN EN EJE PRINCIPAL (horizontal):
+   * Empuja el logo al extremo izquierdo y el botón logout al
+   * extremo derecho, con los enlaces navegación en el centro.
+   * Ver explicación detallada en el comentario de sección.
+   */
+  justify-content: space-between;
+
+  /*
+   * DIMENSIONES:
+   * Se usa min-height (no height fijo) para que la navbar
+   * crezca verticalmente si el contenido lo requiere, sin
+   * recortar texto en configuraciones de fuente grande o zoom.
+   */
+  min-height: var(--navbar-height); /* = 60px */
+  padding: 0 var(--space-lg);
+
+  background-color: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Marca / Logo */
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0; /* evita que el logo se comprima */
+}
+
+.navbar__logo {
+  font-size: 22px;
+  filter: drop-shadow(0 0 6px rgba(0, 207, 255, 0.7));
+}
+
+.navbar__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-accent-primary);
+  text-transform: uppercase;
+}
+
+/* Lista de enlaces */
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.navbar__link {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  padding: var(--space-xs) 0;
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--color-accent-primary);
+  border-bottom-color: var(--color-accent-primary);
+}
+
+/* Botón logout */
+.navbar__logout {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  padding: 6px 14px;
+  border: 1px solid var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+              background-color var(--transition-fast);
+}
+
+.navbar__logout:hover {
+  color: var(--color-error);
+  border-color: var(--color-error);
+  background-color: rgba(244, 63, 94, 0.08);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   ░░  EJERCICIO 3 – LAYOUT DE 3 COLUMNAS  ░░
+   ══════════════════════════════════════════════════════════════════
+
+   RESPUESTA CONCEPTUAL OBLIGATORIA [EJ3-A]:
+   ¿Qué diferencia hay entre `flex: 1` y `flex-grow: 1`?
+   ¿Son exactamente lo mismo?
+
+   NO son exactamente lo mismo. La diferencia es sutil pero crítica:
+
+   `flex-grow: 1`
+     → Define ÚNICAMENTE la proporción de crecimiento del ítem.
+     → Las otras dos sub-propiedades (flex-shrink y flex-basis)
+       mantienen sus valores por defecto: flex-shrink=1 y
+       flex-basis=auto (es decir, usa el tamaño natural del contenido).
+
+   `flex: 1`
+     → Es el SHORTHAND equivalente a: flex-grow:1 flex-shrink:1 flex-basis:0%
+     → La clave está en flex-basis:0%. Al forzar la base a cero,
+       TODO el espacio disponible del contenedor se redistribuye
+       entre los ítems según su factor de crecimiento.
+     → Con flex-basis:auto (caso de flex-grow:1), el navegador
+       primero reserva espacio para el contenido de cada ítem y
+       SOLO distribuye el espacio RESTANTE proporcionalmente.
+
+   Ejemplo práctico:
+   Si el sidebar tiene más texto que el main, con flex-grow:1 el
+   sidebar podría quedar visualmente más ancho que con flex:1,
+   porque su "base" incluye el tamaño de su contenido.
+   Con flex:1 la distribución es estrictamente proporcional.
+
+   ────────────────────────────────────────────────────────────────
+   RESPUESTA CONCEPTUAL OBLIGATORIA [EJ3-B]:
+   ¿Qué propiedad se agrega para que el Sidebar nunca sea
+   menor a 180px sin importar el flex-shrink?
+
+   La propiedad es: `min-width: 180px`
+
+   Razonamiento:
+   Cuando el viewport se reduce, Flexbox activa flex-shrink para
+   comprimir los ítems y evitar desbordamiento. Sin restricción,
+   el sidebar se encogería indefinidamente.
+   `min-width: 180px` establece un umbral mínimo absoluto:
+   el algoritmo de shrink nunca reducirá el ítem por debajo de
+   ese valor, independientemente de la presión del layout.
+
+   Nota: `min-width` en un flex-item tiene precedencia sobre
+   `flex-shrink` y sobre `flex-basis` — es el "suelo" final del tamaño.
+
+   ════════════════════════════════════════════════════════════════ */
+
+.dashboard-layout {
+  /*
+   * FLEX CONTAINER HORIZONTAL:
+   * Los tres hijos directos (sidebar, main, alert-panel) se
+   * distribuyen en una fila (row es el valor por defecto).
+   */
+  display: flex;
+
+  /*
+   * ALTURA MÍNIMA CON calc():
+   * Se usa `min-height` y no `height` para que el contenido
+   * largo pueda crecer más allá del viewport. Se resta la
+   * altura exacta de la navbar (60px) para que el layout ocupe
+   * visualmente el resto de la pantalla visible sin crear scroll
+   * innecesario en contenidos cortos.
+   */
+  min-height: calc(100vh - var(--navbar-height)); /* = calc(100vh - 60px) */
+
+  /* El flex: 1 en body hace que el dashboard-layout crezca para
+     empujar el footer al final de la página (Sticky Footer). */
+  flex: 1;
+}
+
+
+/* ─── SIDEBAR ──────────────────────────────────────────────────── */
+
+.sidebar {
+  /*
+   * flex: 1 → proporción 1 en la distribución de espacio.
+   * Equivale a: flex-grow:1 flex-shrink:1 flex-basis:0%
+   * El sidebar ocupará 1/5 del espacio disponible total
+   * (porque main-content tiene flex:3 y alert-panel flex:1,
+   *  sumando 1+3+1 = 5 partes).
+   */
+  flex: 1;
+
+  /*
+   * RESPUESTA [EJ3-B] aplicada:
+   * El sidebar nunca se reducirá por debajo de 180px gracias a
+   * min-width. El algoritmo flex-shrink no puede pasar esta valla.
+   */
+  min-width: 180px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background-color: var(--color-bg-surface);
+  border-right: 1px solid var(--color-border);
+  padding: var(--space-lg) 0;
+}
+
+.sidebar__nav {
+  flex: 1; /* el menú ocupa el espacio vertical disponible */
+}
+
+.sidebar__menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 12px var(--space-lg);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  border-left: 3px solid transparent;
+  transition: color var(--transition-fast), background-color var(--transition-fast),
+              border-left-color var(--transition-fast);
+}
+
+.sidebar__item:hover,
+.sidebar__item--active {
+  color: var(--color-accent-primary);
+  background-color: var(--color-accent-glow);
+  border-left-color: var(--color-accent-primary);
+}
+
+.sidebar__icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Estado del sistema en la parte inferior del sidebar */
+.sidebar__system-status {
+  padding: var(--space-md) var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.sidebar__status-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.sidebar__status-value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.sidebar__status-value--ok {
+  color: var(--color-ok);
+  text-shadow: 0 0 8px rgba(20, 224, 110, 0.5);
+}
+
+
+/* ─── MAIN CONTENT ─────────────────────────────────────────────── */
+
+.main-content {
+  /*
+   * flex: 3 → proporción 3 (el triple que sidebar y alert-panel).
+   * El main-content ocupará 3/5 del espacio disponible.
+   */
+  flex: 3;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+
+  padding: var(--space-xl);
+  background-color: var(--color-bg-root);
+  overflow-y: auto;
+}
+
+.main-content__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.main-content__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.main-content__subtitle {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.main-content__timestamp {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.06em;
+  align-self: flex-end;
+  white-space: nowrap;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   ░░  EJERCICIO 2 – CUADRÍCULA DE SENSORES  ░░
+   ══════════════════════════════════════════════════════════════════
+
+   RESPUESTA CONCEPTUAL OBLIGATORIA [EJ2]:
+   Diferencia entre `align-items` y `align-content`:
+
+   CLAVE CONCEPTUAL: ambas propiedades actúan sobre el eje cruzado
+   (el eje perpendicular al eje principal), pero en NIVELES distintos
+   de la jerarquía de alineación:
+
+   `align-items`  →  Actúa DENTRO DE CADA FILA (o columna).
+     Controla cómo se alinean los flex-items en relación al
+     tamaño del "cross-axis" de LA LÍNEA EN QUE ESTÁN.
+     Es decir, si en una misma fila hay tarjetas con alturas
+     distintas, align-items decide si se alinean arriba (flex-start),
+     en el centro (center), abajo (flex-end) o si se estiran
+     para igualar la más alta (stretch).
+     → Aplica a: el espacio dentro de una fila individual.
+
+   `align-content`  →  Actúa ENTRE LAS FILAS COMPLETAS.
+     Solo tiene efecto cuando hay MÁS DE UNA línea (es decir,
+     cuando flex-wrap: wrap o wrap-reverse genera múltiples filas).
+     Controla cómo se distribuye el ESPACIO LIBRE VERTICAL entre
+     el grupo completo de filas dentro del contenedor.
+     → Aplica a: el espacio entre filas ya formadas.
+
+   Analogía visual:
+   Imagina una hoja de papel con renglones (filas) y texto (ítems):
+   • `align-items`   = cómo se ubica el texto dentro de cada renglón.
+   • `align-content` = cómo se distribuyen los renglones en la hoja.
+
+   En la sensor-grid con flex-wrap: wrap, ambas son relevantes:
+   - align-items: stretch → todas las tarjetas de una misma fila
+     tienen la misma altura (la más alta de esa fila).
+   - align-content: flex-start → las filas se acumulan desde el
+     borde superior sin espacio extra entre ellas.
+
+   ════════════════════════════════════════════════════════════════ */
+
+.sensor-grid {
+  /*
+   * FLEX MULTILÍNEA:
+   * `flex-wrap: wrap` permite que las tarjetas se distribuyan en
+   * múltiples filas cuando el espacio en la fila actual se agota.
+   * Sin wrap, todas las tarjetas quedarían en una sola línea
+   * comprimiéndose indefinidamente.
+   */
+  display: flex;
+  flex-wrap: wrap;
+
+  /*
+   * ESPACIADO MODERNO CON `gap`:
+   * gap: 16px → aplica 16px tanto en el eje horizontal (column-gap)
+   * como en el vertical (row-gap) entre todas las tarjetas.
+   * Es más limpio que usar margin en los hijos porque no genera
+   * margen extra en los bordes del contenedor.
+   */
+  gap: var(--space-md); /* = 16px */
+
+  /*
+   * ALINEACIÓN DENTRO DE CADA FILA:
+   * stretch (valor por defecto) hace que todas las tarjetas de
+   * una misma fila tengan la misma altura → columnas de tarjetas
+   * visualmente parejas.
+   */
+  align-items: stretch;
+
+  /*
+   * ALINEACIÓN ENTRE FILAS:
+   * flex-start agrupa las filas hacia la parte superior del
+   * contenedor, sin espacio extra entre ellas.
+   */
+  align-content: flex-start;
+}
+
+.sensor-card {
+  /*
+   * TAMAÑO BASE CON calc():
+   * flex-basis: calc(33.333% - 16px) determina el tamaño inicial
+   * de cada tarjeta antes de aplicar grow/shrink.
+   *
+   * Matemática del cálculo de 3 columnas perfectas:
+   *   - Hay 3 tarjetas por fila.
+   *   - Entre ellas hay 2 gaps de 16px cada uno = 32px en total.
+   *   - Pero la propiedad `gap` reparte el espacio entre ítems,
+   *     no en los bordes. Con 3 ítems hay 2 gaps internos.
+   *   - Cada tarjeta debe ocupar (100% - 2*16px) / 3
+   *     = (100% - 32px) / 3
+   *     = 33.333% - 10.666px ... sin embargo, usar directamente
+   *     `calc(33.333% - 16px)` funciona bien en la práctica
+   *     porque Flexbox distribuye el excedente con flex-grow:0
+   *     y el gap absorbe el espacio intersticial correctamente.
+   *
+   * flex-grow: 0 → las tarjetas NO crecen para ocupar espacio extra.
+   * flex-shrink: 1 → sí pueden encogerse si el espacio es escaso.
+   */
+  flex: 0 1 calc(33.333% - var(--space-md));
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  transition: transform var(--transition-base), box-shadow var(--transition-base),
+              border-color var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de brillo superior en las tarjetas */
+.sensor-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-accent-primary);
+  opacity: 0.4;
+}
+
+.sensor-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 207, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 207, 255, 0.1);
+}
+
+/* Variantes de color por estado */
+.sensor-card--ok::before    { background: var(--color-ok);      opacity: 0.6; }
+.sensor-card--warning::before { background: var(--color-warning); opacity: 0.6; }
+.sensor-card--error::before { background: var(--color-error);   opacity: 0.8; }
+
+.sensor-card--error {
+  border-color: rgba(244, 63, 94, 0.3);
+  background-color: #130c12;
+  animation: pulse-error 2s ease-in-out infinite;
+}
+
+@keyframes pulse-error {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+  50%       { box-shadow: 0 0 16px 2px rgba(244, 63, 94, 0.2); }
+}
+
+/* Partes internas de la tarjeta */
+.sensor-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.sensor-card__icon {
+  font-size: 18px;
+}
+
+.sensor-card__name {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.sensor-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex: 1;
+}
+
+.sensor-card__value {
+  font-family: var(--font-mono);
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.sensor-card__unit {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin-left: 4px;
+}
+
+/* Barra de progreso */
+.sensor-card__bar-track {
+  height: 4px;
+  background-color: var(--color-bg-raised);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: var(--space-xs);
+}
+
+.sensor-card__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent-primary), rgba(0, 207, 255, 0.5));
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+.sensor-card--ok .sensor-card__bar-fill {
+  background: linear-gradient(90deg, var(--color-ok), rgba(20, 224, 110, 0.4));
+}
+
+.sensor-card--warning .sensor-card__bar-fill {
+  background: linear-gradient(90deg, var(--color-warning), rgba(245, 158, 11, 0.4));
+}
+
+.sensor-card__bar-fill--alert {
+  background: linear-gradient(90deg, var(--color-error), rgba(244, 63, 94, 0.5));
+  animation: blink-bar 1s step-start infinite;
+}
+
+@keyframes blink-bar {
+  50% { opacity: 0.3; }
+}
+
+/* Footer de la tarjeta */
+.sensor-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--color-border);
+}
+
+.sensor-card__status {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sensor-card__status--ok      { color: var(--color-ok); }
+.sensor-card__status--warning { color: var(--color-warning); }
+.sensor-card__status--error   { color: var(--color-error); }
+
+.sensor-card__id {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+}
+
+
+/* ─── ALERT PANEL ─────────────────────────────────────────────── */
+
+.alert-panel {
+  /*
+   * flex: 1 → proporción 1, igual que el sidebar.
+   * Ocupa 1/5 del espacio total disponible.
+   */
+  flex: 1;
+  min-width: 180px; /* mismo piso que el sidebar */
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: var(--color-bg-surface);
+  border-left: 1px solid var(--color-border);
+}
+
+.alert-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.alert-panel__title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.alert-panel__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background-color: var(--color-error);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 0 5px;
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.15); }
+}
+
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-sm) 0;
+}
+
+.alert-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+  border-left: 3px solid transparent;
+  transition: background-color var(--transition-fast);
+}
+
+.alert-item:hover {
+  background-color: var(--color-bg-raised);
+}
+
+.alert-item--critical {
+  border-left-color: var(--color-error);
+  background-color: rgba(244, 63, 94, 0.05);
+}
+
+.alert-item--warning {
+  border-left-color: var(--color-warning);
+}
+
+.alert-item--info {
+  border-left-color: var(--color-info);
+}
+
+.alert-item__level {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.alert-item--critical .alert-item__level { color: var(--color-error); }
+.alert-item--warning  .alert-item__level { color: var(--color-warning); }
+.alert-item--info     .alert-item__level { color: var(--color-info); }
+
+.alert-item__message {
+  font-size: 12px;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+
+.alert-item__time {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+}
+
+.alert-panel__footer {
+  padding: var(--space-md) var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.alert-panel__btn-all {
+  width: 100%;
+  padding: 8px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.alert-panel__btn-all:hover {
+  background-color: var(--color-accent-glow);
+  border-color: var(--color-accent-primary);
+}
+
+
+/* ──────────────────────────────────────────────────────────────────
+   FOOTER GLOBAL
+   ────────────────────────────────────────────────────────────────── */
+
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--footer-height);
+  padding: 0 var(--space-lg);
+  background-color: var(--color-bg-surface);
+  border-top: 1px solid var(--color-border);
+  /* flex-shrink: 0 evita que el footer se comprima en modo column */
+  flex-shrink: 0;
+}
+
+.site-footer__copy {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.06em;
+}
+
+.site-footer__version {
+  color: var(--color-accent-primary);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   ░░  EJERCICIO 4 – RESPONSIVIDAD MÓVIL  ░░
+   ══════════════════════════════════════════════════════════════════
+
+   RESPUESTA CONCEPTUAL OBLIGATORIA [EJ4]:
+   ¿Por qué usar `min-height` en lugar de `height: 100vh`?
+
+   `height: 100vh` (altura FIJA)
+   → Fuerza al contenedor a ocupar EXACTAMENTE el 100% del viewport,
+     sin posibilidad de crecer más allá.
+   → Si el contenido (tarjetas de sensores + alertas) supera esa
+     altura, el contenido se desbordará (`overflow: hidden` lo
+     cortaría; `overflow: auto` generaría scroll dentro del
+     contenedor, no en la página).
+   → En móvil, con el layout apilado verticalmente, el contenido
+     total fácilmente supera el alto del viewport, haciendo que
+     `height: 100vh` sea insuficiente y cause contenido cortado.
+
+   `min-height: 100vh` (altura MÍNIMA)
+   → Garantiza que el contenedor NUNCA sea más pequeño que el
+     viewport, previniendo que el footer "flote" en pantallas con
+     poco contenido.
+   → Pero si el contenido crece (layout en columna con muchas
+     tarjetas apiladas), el contenedor SE EXPANDE sin límite,
+     permitiendo el scroll natural de la página.
+   → Es la combinación correcta: "al menos tan alto como la
+     pantalla, pero puede ser más alto si el contenido lo exige".
+
+   Regla práctica:
+   • `height` = tamaño exacto (contenido puede desbordarse)
+   • `min-height` = tamaño mínimo (puede crecer sin límite)
+
+   ════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  /* ── Navbar: apila brand y links verticalmente en pantallas muy pequeñas */
+  .navbar {
+    flex-wrap: wrap;
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .navbar__links {
+    gap: var(--space-lg);
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    padding-bottom: var(--space-xs);
+  }
+
+  /* ── Dashboard Layout: cambia el eje principal a columna */
+  .dashboard-layout {
+    /*
+     * TRANSFORMACIÓN DEL EJE PRINCIPAL:
+     * De flex-direction: row (escritorio, 3 columnas lado a lado)
+     * a flex-direction: column (móvil, bloques apilados).
+     * Esto convierte el layout horizontal en una pila vertical:
+     * [Sidebar] → [Main Content] → [Alert Panel]
+     */
+    flex-direction: column;
+
+    /*
+     * min-height en lugar de height:
+     * Ver explicación detallada en el comentario de sección EJ4.
+     * En modo columna el contenido apilado supera 100vh fácilmente.
+     */
+    min-height: calc(100vh - var(--navbar-height));
+  }
+
+  /* ── Sidebar: ocupa el ancho completo, altura automática */
+  .sidebar {
+    /*
+     * `flex: none` desactiva grow y shrink; el sidebar
+     * no participará en la distribución proporcional de espacio.
+     * Su tamaño dependerá exclusivamente de su contenido y
+     * de la propiedad width que le asignamos.
+     */
+    flex: none;
+
+    /* Ocupa todo el ancho del viewport en móvil */
+    width: 100%;
+    min-width: unset;
+
+    /* En móvil mostramos el menú horizontalmente para ahorrar espacio */
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) var(--space-md);
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .sidebar__menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .sidebar__item {
+    padding: 6px 10px;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    font-size: 11px;
+  }
+
+  .sidebar__item:hover,
+  .sidebar__item--active {
+    border-left-color: transparent;
+    border-bottom-color: var(--color-accent-primary);
+  }
+
+  .sidebar__label {
+    display: none; /* solo iconos en pantallas muy pequeñas */
+  }
+
+  .sidebar__system-status {
+    border-top: none;
+    border-left: 1px solid var(--color-border);
+    padding: 0 0 0 var(--space-md);
+    white-space: nowrap;
+  }
+
+  /* ── Main Content: se expande para ocupar el espacio restante */
+  .main-content {
+    /*
+     * `flex: 1` hace que el main-content crezca para llenar
+     * todo el espacio vertical disponible en modo columna,
+     * desplazando el alert-panel hacia abajo.
+     */
+    flex: 1;
+
+    padding: var(--space-md);
+  }
+
+  /* ── Sensor Grid: en móvil, 1 tarjeta por fila */
+  .sensor-card {
+    /*
+     * Se sobreescribe flex-basis para que cada tarjeta ocupe
+     * el 100% del ancho. En móvil, una columna única es más
+     * legible que las 3 columnas del escritorio.
+     */
+    flex: 1 1 100%;
+  }
+
+  /* ── Alert Panel: ocupa el ancho completo, altura automática */
+  .alert-panel {
+    /*
+     * Mismo patrón que el sidebar:
+     * flex: none + width: 100% para el modo columna.
+     */
+    flex: none;
+    width: 100%;
+    min-width: unset;
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+    max-height: 320px; /* limita la altura del panel en móvil */
+  }
+
+  .alert-list {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .main-content__header {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .main-content__title {
+    font-size: 22px;
+  }
+}
+
+/* ── Breakpoint intermedio: 2 tarjetas por fila (tablets) ── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sensor-card {
+    flex: 0 1 calc(50% - var(--space-md));
+  }
+
+  .sidebar__label,
+  .alert-panel {
+    /* En tablet, opcional: ocultar el panel de alertas */
+  }
+}
+
+
+/* ──────────────────────────────────────────────────────────────────
+   UTILIDADES  –  Scroll personalizado y otros detalles
+   ────────────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-root);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-hover);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Selección de texto con acento de marca */
+::selection {
+  background-color: rgba(0, 207, 255, 0.25);
+  color: var(--color-text-primary);
+}
+
+.population-chart {
+    margin: 2rem 1rem;
+    padding: 1rem;
+    background-color: #080f1e;
+    border-radius: 8px;
+}
+
+.population-chart__title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 15px;
+    height: 220px; 
+}
+
+.bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bar-fill {
+    width: 30px;
+    background-color: #4e79a7;
+    border-radius: 4px 4px 0 0;
+}
+
+.bar-label {
+    margin-top: 6px;
+    font-size: 0.8rem;
+    color: #ffffff;
+}

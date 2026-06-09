@@ -1,0 +1,19 @@
+1.flex-wrap: wrap, porque si los elementos no implementan el wrap todos los items pertenecerían a una sola linea.
+
+2.align-items.
+
+
+3.
+.galeria {
+  display: flex;
+  width: 600px;
+  height: 300px;
+
+  flex-wrap: wrap;           /* permite varias líneas */
+  align-content: space-between; /* distribuye las líneas verticalmente */
+}
+
+.card {
+  width: 150px;
+  height: 100px;
+}

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AcueductosIoT – Dashboard de Monitoreo Hídrico</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Fuente técnica: IBM Plex Mono (datos) + Barlow Condensed (titulares) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+
+
+    <!-- ═══════════════════════════════════════════════════
+         NAV  –  Barra de navegación principal
+         Ejercicio 1: contenedor flex horizontal
+    ═══════════════════════════════════════════════════ -->
+    <nav class="navbar" aria-label="Navegación principal">
+        <div class="navbar__brand">
+            <span class="navbar__logo" aria-hidden="true">💧</span>
+            <span class="navbar__title">AcueductosIoT</span>
+        </div>
+
+        <ul class="navbar__links" role="list">
+            <li><a class="navbar__link navbar__link--active" href="#" aria-current="page">Inicio</a></li>
+            <li><a class="navbar__link" href="#">Sensores</a></li>
+            <li><a class="navbar__link" href="#">Alertas</a></li>
+            <li><a class="navbar__link" href="#">Reportes</a></li>
+        </ul>
+
+        <button class="navbar__logout" type="button">Cerrar Sesión</button>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════
+         DASHBOARD LAYOUT  –  Contenedor de 3 columnas
+         Ejercicio 3: flex row con proporciones 1 : 3 : 1
+    ═══════════════════════════════════════════════════ -->
+    <div class="dashboard-layout">
+
+        <!-- ─── SIDEBAR ─────────────────────────────────── -->
+        <aside class="sidebar" aria-label="Menú lateral">
+            <nav class="sidebar__nav" aria-label="Secciones del sistema">
+                <ul class="sidebar__menu" role="list">
+                    <li>
+                        <a class="sidebar__item sidebar__item--active" href="#" aria-current="true">
+                            <span class="sidebar__icon" aria-hidden="true">📊</span>
+                            <span class="sidebar__label">Resumen</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__item" href="#">
+                            <span class="sidebar__icon" aria-hidden="true">💧</span>
+                            <span class="sidebar__label">Tanques</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__item" href="#">
+                            <span class="sidebar__icon" aria-hidden="true">⚡</span>
+                            <span class="sidebar__label">Presiones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__item" href="#">
+                            <span class="sidebar__icon" aria-hidden="true">🧪</span>
+                            <span class="sidebar__label">Calidad</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__item" href="#">
+                            <span class="sidebar__icon" aria-hidden="true">⚙️</span>
+                            <span class="sidebar__label">Configuración</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar__system-status">
+                <p class="sidebar__status-label">Estado del sistema</p>
+                <p class="sidebar__status-value sidebar__status-value--ok">● OPERATIVO</p>
+            </div>
+        </aside><!-- /sidebar -->
+        <!-- ─── MAIN CONTENT ─────────────────────────────── -->
+        <main class="main-content" aria-label="Panel principal de monitoreo">
+
+            <header class="main-content__header">
+                <h1 class="main-content__title">
+                    Monitoreo en Tiempo Real
+                    <span class="main-content__subtitle">Red de distribución – Zona Norte</span>
+                </h1>
+                <time class="main-content__timestamp" datetime="2025-06-08T14:30:00">
+                    Última actualización: 08 Jun 2025 · 14:30:00
+                </time>
+            </header>
+
+            <!-- ─── Ejercicio 2: Cuadrícula de sensores con Flexbox ─── -->
+            <section class="sensor-grid" aria-label="Tarjetas de sensores activos">
+
+                <!-- Tarjeta 1: Nivel de Tanque Principal -->
+                <article class="sensor-card sensor-card--warning" aria-label="Nivel de Tanque Principal">
+                    <header class="sensor-card__header">
+                        <span class="sensor-card__icon" aria-hidden="true">🏛️</span>
+                        <h2 class="sensor-card__name">Nivel · Tanque Principal</h2>
+                    </header>
+                    <div class="sensor-card__body">
+                        <p class="sensor-card__value">73<span class="sensor-card__unit">%</span></p>
+                        <div class="sensor-card__bar-track" role="progressbar"
+                             aria-valuenow="73" aria-valuemin="0" aria-valuemax="100"
+                             aria-label="73 por ciento de capacidad">
+                            <div class="sensor-card__bar-fill" style="width: 73%;"></div>
+                        </div>
+                    </div>
+                    <footer class="sensor-card__footer">
+                        <span class="sensor-card__status sensor-card__status--warning">⚠ NIVEL MEDIO</span>
+                        <span class="sensor-card__id">ID: TK-001</span>
+                    </footer>
+                </article>
+
+                <!-- Tarjeta 2: Presión de Red -->
+                <article class="sensor-card sensor-card--ok" aria-label="Presión de Red">
+                    <header class="sensor-card__header">
+                        <span class="sensor-card__icon" aria-hidden="true">🌡️</span>
+                        <h2 class="sensor-card__name">Presión de Red</h2>
+                    </header>
+                    <div class="sensor-card__body">
+                        <p class="sensor-card__value">4.2<span class="sensor-card__unit">bar</span></p>
+                        <div class="sensor-card__bar-track" role="progressbar"
+                             aria-valuenow="84" aria-valuemin="0" aria-valuemax="100">
+                            <div class="sensor-card__bar-fill" style="width: 84%;"></div>
+                        </div>
+                    </div>
+                    <footer class="sensor-card__footer">
+                        <span class="sensor-card__status sensor-card__status--ok">✔ NORMAL</span>
+                        <span class="sensor-card__id">ID: PR-014</span>
+                    </footer>
+                </article>
+
+                <!-- Tarjeta 3: Calidad del Agua -->
+                <article class="sensor-card sensor-card--ok" aria-label="Calidad del Agua">
+                    <header class="sensor-card__header">
+                        <span class="sensor-card__icon" aria-hidden="true">🧪</span>
+                        <h2 class="sensor-card__name">Calidad del Agua</h2>
+                    </header>
+                    <div class="sensor-card__body">
+                        <p class="sensor-card__value">7.1<span class="sensor-card__unit">pH</span></p>
+                        <div class="sensor-card__bar-track" role="progressbar"
+                             aria-valuenow="71" aria-valuemin="0" aria-valuemax="100">
+                            <div class="sensor-card__bar-fill" style="width: 71%;"></div>
+                        </div>
+                    </div>
+                    <footer class="sensor-card__footer">
+                        <span class="sensor-card__status sensor-card__status--ok">✔ APTA</span>
+                        <span class="sensor-card__id">ID: QA-007</span>
+                    </footer>
+                </article>
+
+                <!-- Tarjeta 4: Caudal de Entrada -->
+                <article class="sensor-card sensor-card--ok" aria-label="Caudal de Entrada">
+                    <header class="sensor-card__header">
+                        <span class="sensor-card__icon" aria-hidden="true">💨</span>
+                        <h2 class="sensor-card__name">Caudal de Entrada</h2>
+                    </header>
+                    <div class="sensor-card__body">
+                        <p class="sensor-card__value">320<span class="sensor-card__unit">L/min</span></p>
+                        <div class="sensor-card__bar-track" role="progressbar"
+                             aria-valuenow="64" aria-valuemin="0" aria-valuemax="100">
+                            <div class="sensor-card__bar-fill" style="width: 64%;"></div>
+                        </div>
+                    </div>
+                    <footer class="sensor-card__footer">
+                        <span class="sensor-card__status sensor-card__status--ok">✔ ESTABLE</span>
+                        <span class="sensor-card__id">ID: FL-022</span>
+                    </footer>
+                </article>
+
+                <!-- Tarjeta 5: Temperatura del Agua -->
+                <article class="sensor-card sensor-card--ok" aria-label="Temperatura del Agua">
+                    <header class="sensor-card__header">
+                        <span class="sensor-card__icon" aria-hidden="true">🌡️</span>
+                        <h2 class="sensor-card__name">Temperatura del Agua</h2>
+                    </header>
+                    <div class="sensor-card__body">
+                        <p class="sensor-card__value">18.4<span class="sensor-card__unit">°C</span></p>
+                        <div class="sensor-card__bar-track" role="progressbar"
+                             aria-valuenow="37" aria-valuemin="0" aria-valuemax="100">
+                            <div class="sensor-card__bar-fill" style="width: 37%;"></div>
+                        </div>
+                    </div>
+                    <footer class="sensor-card__footer">
+                        <span class="sensor-card__status sensor-card__status--ok">✔ ÓPTIMA</span>
+                        <span class="sensor-card__id">ID: TM-003</span>
+                    </footer>
+                </article>
+
+                <!-- Tarjeta 6: Estado de Válvula de Emergencia -->
+                <article class="sensor-card sensor-card--error" aria-label="Válvula de Emergencia">
+                    <header class="sensor-card__header">
+                        <span class="sensor-card__icon" aria-hidden="true">🔴</span>
+                        <h2 class="sensor-card__name">Válvula de Emergencia</h2>
+                    </header>
+                    <div class="sensor-card__body">
+                        <p class="sensor-card__value">ABIERTA<span class="sensor-card__unit"></span></p>
+                        <div class="sensor-card__bar-track" role="progressbar"
+                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                            <div class="sensor-card__bar-fill sensor-card__bar-fill--alert" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <footer class="sensor-card__footer">
+                        <span class="sensor-card__status sensor-card__status--error">✖ ALERTA CRÍTICA</span>
+                        <span class="sensor-card__id">ID: VL-001</span>
+                    </footer>
+                </article>
+
+            </section><!-- /sensor-grid -->
+            </section><!-- /sensor-grid -->
+            <!-- ─── Gráfico de población beneficiada ─── -->
+            <section class="population-chart" aria-label="Población beneficiada">
+                <h2 class="population-chart__title">Cantidad de población beneficiada</h2>
+                <div class="chart">
+                    <div class="bar">
+                        <div class="bar-fill" style="height: 50px;"></div>
+                        <span class="bar-label">2000<br></span>
+                    </div>
+                    <div class="bar">
+                        <div class="bar-fill" style="height: 120px;"></div>
+                        <span class="bar-label">2010<br></span>
+                    </div>
+                    <div class="bar">
+                        <div class="bar-fill" style="height: 150px;"></div>
+                        <span class="bar-label">2015<br></span>
+                    </div>
+                    <div class="bar">
+                        <div class="bar-fill" style="height: 200px;"></div>
+                        <span class="bar-label">2020<br></span>
+                    </div>
+                    <div class="bar">
+                        <div class="bar-fill" style="height: 210px;"></div>
+                        <span class="bar-label">2026<br></span>
+                    </div>
+                </div>
+            </section>
+        </main><!-- /main-content -->
+ 
+        <!-- ─── ALERT PANEL ────────────────────────────────── -->
+        <aside class="alert-panel" aria-label="Panel de alertas activas">
+            <header class="alert-panel__header">
+                <h2 class="alert-panel__title">Alertas Activas</h2>
+                <span class="alert-panel__badge" aria-label="3 alertas activas">3</span>
+            </header>
+
+            <ul class="alert-list" role="list" aria-live="polite" aria-atomic="false">
+
+                <li class="alert-item alert-item--critical" role="alert">
+                    <span class="alert-item__level">CRÍTICO</span>
+                    <p class="alert-item__message">Válvula VL-001 abierta inesperadamente</p>
+                    <time class="alert-item__time" datetime="2025-06-08T14:28:00">hace 2 min</time>
+                </li>
+
+                <li class="alert-item alert-item--warning">
+                    <span class="alert-item__level">AVISO</span>
+                    <p class="alert-item__message">Nivel de Tanque TK-001 por debajo del 75%</p>
+                    <time class="alert-item__time" datetime="2025-06-08T14:15:00">hace 15 min</time>
+                </li>
+
+                <li class="alert-item alert-item--info">
+                    <span class="alert-item__level">INFO</span>
+                    <p class="alert-item__message">Mantenimiento programado: bomba BM-02 en 48 h</p>
+                    <time class="alert-item__time" datetime="2025-06-08T13:00:00">hace 1 h</time>
+                </li>
+
+            </ul>
+
+            <footer class="alert-panel__footer">
+                <button class="alert-panel__btn-all" type="button">Ver historial completo</button>
+            </footer>
+        </aside><!-- /alert-panel -->
+
+    </div><!-- /dashboard-layout -->
+    <!-- ═══════════════════════════════════════════════════
+         FOOTER  –  Pie de página global
+    ═══════════════════════════════════════════════════ -->
+    <footer class="site-footer" role="contentinfo">
+        <p class="site-footer__copy">
+            © 2025 AcueductosIoT · Universidad Técnica Nacional ·
+            <span class="site-footer__version">v2.4.1</span>
+        </p>
+    </footer>
+
+</body>
+</html>

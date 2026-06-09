@@ -1,0 +1,3 @@
+1.Hacia abajo. Flex-direction: colum el eje principal es vertical.
+2.El eje horizontal (cruzado). Con flex-direction: column, align-items alinea los elementos en el eje transversal.
+3.Flex-direction-colum.
