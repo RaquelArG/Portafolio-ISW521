@@ -1,0 +1,13 @@
+:root {
+  --color-principal: #0a74df;
+  --color-blanco: #ffffff;
+  --espaciado-base: 16px;
+  --radio-borde: 8px;
+}
+
+.boton-comprar {
+  background: var(--color-principal);
+  color: var(--color-blanco);
+  padding: var(--espaciado-base);
+  border-radius: var(--radio-borde);
+}

@@ -1,0 +1,5 @@
+1.El background-image: url('promo-4k.jpg'); carga una imagen 4K incluso en pantallas pequeñas. 
+
+2.En los @media (max-width: 992px) y @media (max-width: 768px) se repite exactamente la misma regla (width: 576px).
+
+3.Definir anchos en píxeles (1400px, 1000px, 576px) contradice el enfoque mobile-first y la idea de diseño responsivo.

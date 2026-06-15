@@ -1,0 +1,3 @@
+1.No utilizaron media queries, se utilizaron pixel quemados en ves del viewport.
+2.Se puede verificar en DevTools y revisar el código fuente y ver si falta la etiqueta viewport.
+3.<meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -1,0 +1,1 @@
+1.Se rechaza porque se estaría desarrollando para un solo tipo de dispositivo, los dispositivos cambian constantemente por lo que podría quedar obsoleto en poco tiempo.

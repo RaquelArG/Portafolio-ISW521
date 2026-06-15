@@ -1,0 +1,6 @@
+1.
+Base:.productos { display: grid; grid-template-columns: 1fr; gap: 16px; }
+No se mueve nada.
+
+2.Todo se mueve para media queries. @ media (min-widget: 600px) .productos { grid-template-columns: repeat(2);
+3.Todo se mueve para media queries. @ media (min-widget:  1024px) .productos { grid-template-columns: repeat(4, lfr): gap: 32px;
