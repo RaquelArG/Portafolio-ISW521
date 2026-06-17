@@ -1,0 +1,24 @@
+<blockquote> bloque : se utiliza para citar un bloque de texto proveniente de otra fuente.
+
+span =  Se usa para aplicar estilos o manipular con JavaScript una parte específica del texto sin que tenga un significado semántico especial. Es un contenedor en línea.
+
+strong = indica que el texto tiene importancia semántica. Normalmente se muestra en negrita, pero su valor real es resaltar relevancia.
+
+article bloque = Define un bloque de contenido independiente y autocontenido, como una noticia, entrada de blog o publicación.
+
+b = Muestra el texto en negrita, pero sin dar importancia semántica (solo estilo visual).
+
+time = Representa fechas u horas.
+
+ul bloque: lista en desorden.
+
+mark =  Resalta texto como si estuviera subrayado con un marcador. Se usa para destacar información relevante.
+
+code = Se utiliza para mostrar fragmentos de código en línea, con tipografía monoespaciada.
+
+secction bloque = Define una sección temática dentro de un documento, agrupando contenido relacionado.
+
+colspan: expandir columnas
+rowspan: expandir filas
+
+
