@@ -8,11 +8,17 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/reglamento.css" />
-  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <noscript>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/reglamento.css">
+  </noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  
+  <link rel="icon" href="assets/logo.webp" type="image/webp" />
 </head>
 
 <body>
@@ -28,9 +34,9 @@
           <img src="assets/logo.webp" alt="Logo del Gimnasio" width="48" height="48" />
           <div class="logo-text">
             <span class="logo-name">RAVASA Gym</span>
-            <span class="logo-tagline">El lugar más feliz del mundo.</span>
+            <span class="logo-tagline">Más que un gimnasio.</span>
           </div>
-        </a>
+   
 
         <ul class="nav-links" id="nav-menu" role="list">
           <li><a href="index.html#about">Nosotros</a></li>
@@ -42,6 +48,11 @@
         </ul>
 
         <div class="nav-actions">
+          <div class="font-size-controls" role="group" aria-label="Controles de tamaño de texto">
+            <button class="font-size-btn font-size-decrease" id="font-decrease" aria-label="Disminuir tamaño de texto" title="Texto más pequeño">A−</button>
+            <button class="font-size-btn font-size-reset" id="font-reset" aria-label="Restablecer tamaño de texto a normal" title="Tamaño normal">A</button>
+            <button class="font-size-btn font-size-increase" id="font-increase" aria-label="Aumentar tamaño de texto" title="Texto más grande">A+</button>
+          </div>
           <button class="theme-toggle" id="theme-btn" aria-label="Cambiar modo claro/oscuro" title="Cambiar tema">🌙</button>
           <a href="https://wa.me/50688006274" class="btn btn-primary" aria-label="Contactar por WhatsApp">Inscríbete</a>
           <button class="menu-toggle" id="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">☰</button>
