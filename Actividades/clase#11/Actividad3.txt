@@ -1,0 +1,10 @@
+Reescriban el mensaje usando template literals.
+Usen destructuring para extraer solo las propiedades necesarias en la firma de la función.
+Usen spread operator para agregar el campo calculado sin mutar el objeto original.
+Si la función puede recibir banderas opcionales adicionales, agréguenlas con rest parameter.
+
+
+function calcularProductos ({nombre, tipo} a, b){const total = a + b;
+return{`El total de ${nombre} es (${tipo})`, total
+};
+}

@@ -1,0 +1,23 @@
+1.Expliquen, con sus palabras, por qué this.segundos sale undefined dentro del setTimeout.
+Porque el setTimeout se ejecuta después de un tiempo por lo que se pierde la referencia al cronometro.
+
+2.Propongan una solución cambiando la function tradicional por una arrow function.
+
+const cronometro = {
+	segundos: 0;
+	iniciar(){
+		serTimeout(function()){
+		this.segundos++;
+		console.log(this.segundos);
+}, 1000);}};
+3.Propongan una segunda solución, esta vez usando bind sin tocar la function tradicional.
+
+const cronometro = {
+	segundos: 0;
+	iniciar(){
+		serTimeout(() => {
+		this.segundos++;
+		console.log(this.segundos);
+}, 1000);}};
+4.¿Cuál de las dos soluciones prefieren para este caso y por qué?
+La primera, porque utilizando bind() se puede fijar manualmente el valor this.segundos.

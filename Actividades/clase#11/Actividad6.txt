@@ -1,0 +1,7 @@
+export const agregarProducto = (lista, { nombre, precio }) => {
+  lista.push({ nombre, precio });
+  console.log(`${nombre} - $${precio}`);
+};
+
+export const calcularTotal = (lista) =>
+  lista.reduce((total, p) => total + (p?.precio ?? 0), 0);

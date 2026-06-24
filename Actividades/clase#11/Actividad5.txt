@@ -1,0 +1,11 @@
+Decidan qué tipo de export usar en utilidades.js y por qué.
+Export nombrado, debido a que expone varias utilidades relacionadas.
+
+Decidan qué tipo de export usar en ProductoCard.js y por qué.
+Export default, porque representa una sola cosa principal.
+
+Escriban las líneas de import necesarias dentro de main.js.
+Import { funcionA, funcionB } from './utilidades.js' y import ProductoCard from './ProductoCard.js'.
+
+Corrijan la etiqueta <script> en el HTML para que todo funcione de verdad en el navegador.
+<script type="module" src="./main.js"></script> para que todo el import/export funcione.

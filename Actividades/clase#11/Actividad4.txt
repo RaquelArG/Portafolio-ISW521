@@ -1,0 +1,5 @@
+const ciudad = perfil?.direccion?.ciudad ?? "No registrada";
+const descuentoFinal = perfil?.descuento ?? 0;
+
+
+Habria sido un error porque si existiera un descuento de 0, se remplazaria por otro valor.

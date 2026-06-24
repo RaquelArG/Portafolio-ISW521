@@ -1,0 +1,9 @@
+1.¿Cuál de las tres líneas corre sin ningún problema? Justifiquen con el concepto correcto.
+Seria el histing 
+Seria declaration(), porque el nombre y el cuerpo ya esta guardado antes de ejecutar la esta línea.
+
+2.¿Cuál lanza ReferenceError? Expliquen por qué con el concepto de TDZ.
+expresada() lanza ReferenceError porque la constante existe en la Zona Muerta Temporal.
+
+3.¿Cuál lanza TypeError? Expliquen qué le falta a una arrow function para eso
+Seria new arrow function, porque no tienen la propiedad interna.
