@@ -1,13 +1,59 @@
-/**
- * [NOMBRE DEL GIMNASIO] — main.js
- * Funcionalidades:
- *  1. Web Storage: persistencia del modo claro/oscuro (localStorage) — WCAG/Requerimiento obligatorio
- *  2. Header: clase 'scrolled' al hacer scroll
- *  3. Menú móvil: toggle accesible
- *  4. Formulario de contacto: validación básica + mensaje de confirmación
- *  5. Footer: año dinámico
- *  6. Animaciones on-scroll: IntersectionObserver para fade-in de secciones
- */
+/* ==============================
+   0. CONTROLES DE TAMAÑO DE FUENTE
+   Web Storage → localStorage
+============================== */
+const FONT_SCALE_KEY = 'gym_font_scale';
+const FONT_SCALES = {
+  small: 0.85,
+  normal: 1,
+  large: 1.15,
+  xlarge: 1.35
+};
+
+function getStoredFontScale() {
+  const stored = localStorage.getItem(FONT_SCALE_KEY);
+  return stored ? parseFloat(stored) : FONT_SCALES.normal;
+}
+
+function setStoredFontScale(scale) {
+  localStorage.setItem(FONT_SCALE_KEY, scale.toString());
+}
+
+function applyFontScale(scale) {
+  document.documentElement.style.setProperty('--font-scale', scale);
+  updateFontScaleButtons(scale);
+}
+
+function updateFontScaleButtons(scale) {
+  const decreaseBtn = document.getElementById('font-decrease');
+  const resetBtn = document.getElementById('font-reset');
+  const increaseBtn = document.getElementById('font-increase');
+  
+  if (!decreaseBtn || !resetBtn || !increaseBtn) return;
+
+  // Remover clase active de todos
+  decreaseBtn.classList.remove('active');
+  resetBtn.classList.remove('active');
+  increaseBtn.classList.remove('active');
+
+  // Agregar clase active según la escala actual
+  if (scale === FONT_SCALES.small) {
+    decreaseBtn.classList.add('active');
+  } else if (scale === FONT_SCALES.normal) {
+    resetBtn.classList.add('active');
+  } else if (scale >= FONT_SCALES.large) {
+    increaseBtn.classList.add('active');
+  }
+}
+
+function initFontScale() {
+  const stored = getStoredFontScale();
+  applyFontScale(stored);
+}
+
+
+initFontScale();
+
 
 /* ==============================
    1. MODO OSCURO / CLARO
@@ -65,11 +111,39 @@ function toggleTheme() {
   setStoredTheme(newTheme); // Guardar en localStorage → persistencia al recargar
 }
 
-// Ejecutar al cargar la página (antes del primer render)
 initTheme();
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  /* ==============================
+   Botones de tamaño de fuente
+============================== */
+const decreaseBtn = document.getElementById('font-decrease');
+const resetBtn = document.getElementById('font-reset');
+const increaseBtn = document.getElementById('font-increase');
+
+if (decreaseBtn) {
+  decreaseBtn.addEventListener('click', function() {
+    applyFontScale(FONT_SCALES.small);
+    setStoredFontScale(FONT_SCALES.small);
+  });
+}
+
+if (resetBtn) {
+  resetBtn.addEventListener('click', function() {
+    applyFontScale(FONT_SCALES.normal);
+    setStoredFontScale(FONT_SCALES.normal);
+  });
+}
+
+if (increaseBtn) {
+  increaseBtn.addEventListener('click', function() {
+    const currentScale = getStoredFontScale();
+    const nextScale = currentScale >= FONT_SCALES.large ? FONT_SCALES.xlarge : FONT_SCALES.large;
+    applyFontScale(nextScale);
+    setStoredFontScale(nextScale);
+  });
+}
   /* ==============================
      Botón de tema
   ============================== */
