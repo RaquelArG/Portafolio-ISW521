@@ -1,0 +1,6 @@
+const estudiantes = [
+    {nombre : "Ana", carnet : "208245966"},
+    {nombre : "Luis", carnet : "863245966"}
+];
+
+estudiantes.map(e = `${e.nombre} (${e.carnet})`.toUpperCase());

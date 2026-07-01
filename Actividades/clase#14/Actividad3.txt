@@ -1,0 +1,2 @@
+Los que mutan:push, pop, splice.
+Los que no mutan:map, spread.

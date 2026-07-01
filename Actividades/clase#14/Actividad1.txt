@@ -1,0 +1,3 @@
+1.Imprime 8
+2.La letra c
+3.Imprimiria a,b,c, , , ,z

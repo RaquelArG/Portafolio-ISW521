@@ -1,0 +1,12 @@
+const gastos = [
+    {cat: "Comida", monto: 5000},
+    {cat: "Transporte", monto: 2000},
+    {cat: "Comida", monto: 3000}
+];
+
+const porCategoria = gastos.reduce ((acc, g) => {
+    acc[g.cat] = (acc[g.cat] || 0) + g.monto;
+    return acc;
+}, {}); 
+
+gastos.reduce((acc, g) => acc + g.monto, 0);

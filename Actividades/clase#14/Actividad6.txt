@@ -1,0 +1,8 @@
+const estudiantes = [
+    {nombre : "Ana", promedio : 85},
+    {nombre : "Luis", promedio : 67},
+    {nombre : "Sara", promedio : 91},
+    {nombre : "Tulio", promedio : 70},
+    {nombre : "Ant", promedio : 100}
+];
+console.log(estudiantes.find(p => p.promedio > 90));
