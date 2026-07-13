@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Comparador de Selecciones · Mundial 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="floodlight floodlight-left" aria-hidden="true"></div>
+  <div class="floodlight floodlight-right" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">Estados Unidos · México · Canadá</span>
+      <h1 class="hero-title">Comparador de Selecciones<br />Mundial 2026</h1>
+      <p class="hero-subtitle">
+        Busca dos selecciones en español y compáralas lado a lado, con datos en vivo
+        de la API pública del Mundial 2026.
+      </p>
+    </div>
+    <button id="simulate-401" class="lab-button" type="button" title="Simula un token JWT vencido para probar el flujo de re-autenticación">
+      🔒 Simular sesión expirada
+    </button>
+  </header>
+
+  <main>
+    <section class="matchup" aria-label="Buscador de selecciones">
+
+      <div class="team-slot" data-slot="a">
+        <span class="slot-label">Selección 1</span>
+        <div class="search-box">
+          <input
+            id="search-a"
+            type="text"
+            inputmode="search"
+            autocomplete="off"
+            placeholder="Escribe un país, p. ej. Argentina…"
+            aria-label="Buscar selección 1" />
+          <ul id="dropdown-a" class="dropdown" role="listbox" hidden></ul>
+        </div>
+        <div id="chip-a" class="team-chip" hidden>
+          <span class="chip-flag-slot"></span>
+          <span class="chip-name"></span>
+          <button type="button" class="chip-clear" aria-label="Quitar selección 1">✕</button>
+        </div>
+      </div>
+
+      <div class="vs-badge" aria-hidden="true">
+        <span>VS</span>
+      </div>
+
+      <div class="team-slot" data-slot="b">
+        <span class="slot-label">Selección 2</span>
+        <div class="search-box">
+          <input
+            id="search-b"
+            type="text"
+            inputmode="search"
+            autocomplete="off"
+            placeholder="Escribe un país, p. ej. Brasil…"
+            aria-label="Buscar selección 2" />
+          <ul id="dropdown-b" class="dropdown" role="listbox" hidden></ul>
+        </div>
+        <div id="chip-b" class="team-chip" hidden>
+          <span class="chip-flag-slot"></span>
+          <span class="chip-name"></span>
+          <button type="button" class="chip-clear" aria-label="Quitar selección 2">✕</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="comparison-wrapper" aria-label="Comparación de selecciones">
+      <p id="comparison-empty" class="comparison-empty">Elige dos selecciones para ver la comparación.</p>
+      <div id="comparison" class="comparison-grid" hidden></div>
+    </section>
+  </main>
+
+  <div id="dev-toast" class="dev-toast" role="status" hidden></div>
+
+
+  <div id="reauth-modal" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="reauth-title">
+      <h2 id="reauth-title">Tu sesión expiró</h2>
+      <p class="modal-copy">
+        El token de acceso a la API ya no es válido. Vuelve a autenticarte para
+        continuar exactamente donde te quedaste; no perderás lo que ya buscaste
+        ni las selecciones ya comparadas.
+      </p>
+      <form id="reauth-form" class="reauth-form">
+        <label for="reauth-email">Correo</label>
+        <input id="reauth-email" type="email" required />
+        <label for="reauth-password">Contraseña</label>
+        <input id="reauth-password" type="password" required />
+        <p id="reauth-feedback" class="reauth-feedback" role="alert"></p>
+        <div class="modal-actions">
+          <button type="button" id="reauth-cancel" class="btn-secondary">Cerrar</button>
+          <button type="submit" class="btn-primary">Reautenticar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
