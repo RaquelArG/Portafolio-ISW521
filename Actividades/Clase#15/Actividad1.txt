@@ -1,0 +1,5 @@
+1.Web API del navegador.
+2.API pura de ECMAScript.
+3.Web API del navegador.
+
+Lo que pasaría si se ejecuta en un código Node.js sería: la API pura de ECMAScript se ejecutaría sin inconvenientes, mientras que la web API del navegador tendría problemas porque no tiene el DOM, ni objetos globales de windows.

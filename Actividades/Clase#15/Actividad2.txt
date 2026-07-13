@@ -1,0 +1,10 @@
+<ul><li>1<li>2<li>3<li>4</ul>
+const lista = ul
+const = 
+
+forEach(t < lista.lenght){
+querySelectorAll click > 1};
+	
+
+
+2. Seguiria funcionando con el recorrido relativo

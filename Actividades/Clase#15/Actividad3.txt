@@ -1,0 +1,3 @@
+1.Al no validar la información que se esta extrayendo del formulario, puede un usuario añadir información maliciosa.
+2.Separa el texto del marcador.
+3.campoinput.class.List.
