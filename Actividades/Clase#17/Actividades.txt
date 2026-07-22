@@ -1,0 +1,19 @@
+Actividad 1
+No se añade ninguna línea HTML.
+
+Actividad 2
+Ninguna, solo hay que agregar otro estado y mapearlo en el JSX con .map().
+
+Actividad 3
+Solo toca uno, el del usuario 237, porque es el único que se modifico.
+
+Actividad 4
+Se recomienda Angular.
+-Es un proyecto a largo plazo.
+-Recomendado para soluciones empresariales.
+
+Actividad 5
+-El estado global.
+-Interfaz de usuario.
+-Enrutador.
+
